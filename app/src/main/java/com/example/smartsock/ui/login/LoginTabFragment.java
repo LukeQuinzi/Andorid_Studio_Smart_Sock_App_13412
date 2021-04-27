@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -19,14 +20,20 @@ import android.widget.Toast;
 import com.example.smartsock.MainActivity;
 import com.example.smartsock.R;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class LoginTabFragment extends Fragment {
 
     EditText usernameEditText;
     EditText passwordEditText;
     Button loginButton;
+    CheckBox Rememberme;
 
     float v = 0;
     boolean isValid = false;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor sharedPreferencesEditor;
 
 
     @Override
@@ -38,6 +45,26 @@ public class LoginTabFragment extends Fragment {
         usernameEditText = view.findViewById(R.id.username);
         passwordEditText = view.findViewById(R.id.password);
         loginButton = view.findViewById(R.id.login);
+        Rememberme = view.findViewById(R.id.CBRememberme);
+
+
+        sharedPreferences = getContext().getSharedPreferences("CredentialsDB", MODE_PRIVATE);
+        sharedPreferencesEditor = sharedPreferences.edit();
+
+        if(sharedPreferences != null){
+            String savedusername = sharedPreferences.getString("Username", "");
+            String savedpassword = sharedPreferences.getString("Password", "");
+
+            SignupTabFragment.credentials = new Credentials(savedusername, savedpassword);
+
+            if(sharedPreferences.getBoolean("RememberMeCheckbox", false)){
+                usernameEditText.setText(savedusername);
+                passwordEditText.setText(savedpassword);
+                Rememberme.setChecked(true);
+            }
+
+        }
+
 
 /*      usernameEditText.setTranslationX(800);
         passwordEditText.setTranslationX(800);
@@ -51,6 +78,15 @@ public class LoginTabFragment extends Fragment {
         passwordEditText.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
         loginButton.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();*/
 
+        Rememberme.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                sharedPreferencesEditor.putBoolean("RememberMeCheckbox", Rememberme.isChecked());
+                sharedPreferencesEditor.apply();
+            }
+
+
+        });
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,9 +105,13 @@ public class LoginTabFragment extends Fragment {
                         Toast.makeText(getContext(), "Incorrect Username or Password", Toast.LENGTH_LONG).show();
 
                     } else {
+
+                        Toast.makeText(getContext(), "Welcome " + inputUsername, Toast.LENGTH_LONG).show();
+
                         Intent intent = new Intent();
                         intent.setClass(getActivity(), MainActivity.class);
                         getActivity().startActivity(intent);
+
                     }
                 }
             }

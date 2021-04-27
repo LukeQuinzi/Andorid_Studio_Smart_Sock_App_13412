@@ -7,6 +7,7 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,8 @@ import android.widget.Toast;
 
 import com.example.smartsock.MainActivity;
 import com.example.smartsock.R;
+
+import static android.content.Context.MODE_PRIVATE;
 
 
 public class SignupTabFragment extends Fragment {
@@ -30,6 +33,9 @@ public class SignupTabFragment extends Fragment {
 
     float v=0;
     public static Credentials credentials;
+
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor sharedPreferencesEditor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -47,6 +53,9 @@ public class SignupTabFragment extends Fragment {
         DOB = view.findViewById(R.id.DOB);
         Signup_button = view.findViewById(R.id.signup);
 
+        sharedPreferences = getContext().getSharedPreferences("CredentialsDB", MODE_PRIVATE);
+        sharedPreferencesEditor = sharedPreferences.edit();
+
 
         Signup_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +68,16 @@ public class SignupTabFragment extends Fragment {
 
                 if(validate(sign_username, sign_password,sign_confirm_password)){
                     credentials = new Credentials(sign_username, sign_password);
+
+                    /* Store Credientials */
+                    // Credentials are stores in localtion Device File Explorer >> data >> data >> com.example.smartsock >> CredentialsDB
+                    sharedPreferencesEditor.putString("Username", sign_username);
+                    sharedPreferencesEditor.putString("Password", sign_password);
+
+                    /* Commits the chnages and adds them to the file */
+                    sharedPreferencesEditor.apply();
+
+
                     Intent intent = new Intent();
                     intent.setClass(getActivity(), LoginActivity.class);
                     getActivity().startActivity(intent);
