@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.example.smartsock.MainActivity;
 import com.example.smartsock.R;
 
+import java.util.Map;
+
 import static android.content.Context.MODE_PRIVATE;
 
 
@@ -32,7 +34,7 @@ public class SignupTabFragment extends Fragment {
     private Button Signup_button;
 
     float v=0;
-    public static Credentials credentials;
+    public Credentials credentials;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor sharedPreferencesEditor;
@@ -53,8 +55,19 @@ public class SignupTabFragment extends Fragment {
         DOB = view.findViewById(R.id.DOB);
         Signup_button = view.findViewById(R.id.signup);
 
+        credentials = new Credentials();
+
         sharedPreferences = getContext().getSharedPreferences("CredentialsDB", MODE_PRIVATE);
         sharedPreferencesEditor = sharedPreferences.edit();
+
+        if(sharedPreferences != null){
+
+            Map<String, ?> preferencesMap = sharedPreferences.getAll();
+
+            if(preferencesMap.size() != 0){
+                credentials.loadCredentials(preferencesMap);
+            }
+        }
 
 
         Signup_button.setOnClickListener(new View.OnClickListener() {
@@ -67,23 +80,30 @@ public class SignupTabFragment extends Fragment {
 
 
                 if(validate(sign_username, sign_password,sign_confirm_password)){
-                    credentials = new Credentials(sign_username, sign_password);
 
-                    /* Store Credientials */
-                    // Credentials are stores in localtion Device File Explorer >> data >> data >> com.example.smartsock >> CredentialsDB
-                    sharedPreferencesEditor.putString("Username", sign_username);
-                    sharedPreferencesEditor.putString("Password", sign_password);
+                    if (credentials.checkUsername(sign_username)) {
+                        Toast.makeText(getContext(),"Username already in use!", Toast.LENGTH_SHORT).show();
 
-                    /* Commits the chnages and adds them to the file */
-                    sharedPreferencesEditor.apply();
+                    }else {
+                        //Only if the username is unique we add the credentials to the map and register the user
+                        credentials.addCredentials(sign_username, sign_password);
+
+                        /* Store Credentials */
+                        // Credentials are stores in location Device File Explorer >> data >> data >> com.example.smartsock >> CredentialsDB
+                        sharedPreferencesEditor.putString(sign_username, sign_password);
+
+                        sharedPreferencesEditor.putString("LastSavedUsername", sign_username);
+                        sharedPreferencesEditor.putString("LastSavedPassword", sign_password);
+
+                        /* Commits the changes and adds them to the file */
+                        sharedPreferencesEditor.apply();
 
 
-                    Intent intent = new Intent();
-                    intent.setClass(getActivity(), LoginActivity.class);
-                    getActivity().startActivity(intent);
-                    Toast.makeText(getContext(),"Signup Successful", Toast.LENGTH_SHORT).show();
-
-
+                        Intent intent = new Intent();
+                        intent.setClass(getActivity(), LoginActivity.class);
+                        getActivity().startActivity(intent);
+                        Toast.makeText(getContext(),"Signup Successful", Toast.LENGTH_SHORT).show();
+                    }
 
                 }
 

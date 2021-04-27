@@ -5,29 +5,41 @@ package com.example.smartsock.ui.login;
 
 //Credentials Class allowing us to set and get password and username
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Credentials {
-    private String Username;
-    private String Password;
+    HashMap<String, String> credentialsMapper = new HashMap<String, String>();
 
-    Credentials(String username, String password){
+    public void addCredentials(String username, String password){
+        credentialsMapper.put(username,password);
 
-        this.Username = username;
-        this.Password = password;
     }
 
-    public String getUsername() {
-        return Username;
+    public boolean checkUsername(String username){
+        return credentialsMapper.containsKey(username);
     }
 
-    public void setUsername(String username) {
-        Username = username;
+    public boolean verifyCredentials(String username, String password){
+
+        // checks if user name exists
+        if(credentialsMapper.containsKey(username)){
+            //check if password matches with the username
+            if(password.equals(credentialsMapper.get(username))){
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public String getPassword() {
-        return Password;
-    }
+    public void loadCredentials(Map<String, ?> preferencesMap){
+        for(Map.Entry<String, ?> entries : preferencesMap.entrySet()){
+            // If entries are not equal to the remember me checkbox we come here
+            if(!entries.getKey().equals("RememberMeCheckbox")){
+                credentialsMapper.put(entries.getKey(), entries.getValue().toString());
 
-    public void setPassword(String password) {
-        Password = password;
+            }
+        }
     }
 }

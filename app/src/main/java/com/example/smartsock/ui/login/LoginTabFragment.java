@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.example.smartsock.MainActivity;
 import com.example.smartsock.R;
 
+import java.util.Map;
+
 import static android.content.Context.MODE_PRIVATE;
 
 public class LoginTabFragment extends Fragment {
@@ -31,6 +33,8 @@ public class LoginTabFragment extends Fragment {
 
     float v = 0;
     boolean isValid = false;
+
+    public Credentials credentials;
 
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor sharedPreferencesEditor;
@@ -47,15 +51,22 @@ public class LoginTabFragment extends Fragment {
         loginButton = view.findViewById(R.id.login);
         Rememberme = view.findViewById(R.id.CBRememberme);
 
+        credentials = new Credentials();
+
 
         sharedPreferences = getContext().getSharedPreferences("CredentialsDB", MODE_PRIVATE);
         sharedPreferencesEditor = sharedPreferences.edit();
 
         if(sharedPreferences != null){
-            String savedusername = sharedPreferences.getString("Username", "");
-            String savedpassword = sharedPreferences.getString("Password", "");
 
-            SignupTabFragment.credentials = new Credentials(savedusername, savedpassword);
+            Map<String, ?> preferencesMap = sharedPreferences.getAll();
+
+            if(preferencesMap.size() != 0){
+                credentials.loadCredentials(preferencesMap);
+            }
+
+            String savedusername = sharedPreferences.getString("LastSavedUsername", "");
+            String savedpassword = sharedPreferences.getString("LastSavedPassword", "");
 
             if(sharedPreferences.getBoolean("RememberMeCheckbox", false)){
                 usernameEditText.setText(savedusername);
@@ -65,8 +76,8 @@ public class LoginTabFragment extends Fragment {
 
         }
 
-
-/*      usernameEditText.setTranslationX(800);
+/*      //Animation
+        usernameEditText.setTranslationX(800);
         passwordEditText.setTranslationX(800);
         loginButton.setTranslationX(800);
 
@@ -108,6 +119,11 @@ public class LoginTabFragment extends Fragment {
 
                         Toast.makeText(getContext(), "Welcome " + inputUsername, Toast.LENGTH_LONG).show();
 
+                        sharedPreferencesEditor.putString("LastSavedUsername", inputUsername);
+                        sharedPreferencesEditor.putString("LastSavedPassword", inputPassword);
+
+                        sharedPreferencesEditor.apply();
+
                         Intent intent = new Intent();
                         intent.setClass(getActivity(), MainActivity.class);
                         getActivity().startActivity(intent);
@@ -119,73 +135,12 @@ public class LoginTabFragment extends Fragment {
 
 
         return view;
-
     }
 
-    private boolean validate(String username, String userPassword){
-
-        if(SignupTabFragment.credentials != null){
-            if(username.equals(SignupTabFragment.credentials.getUsername()) && userPassword.equals(SignupTabFragment.credentials.getPassword())){
-                return true;
-            }
-        }
-
-        return false;
+    private boolean validate(String username, String password){
+        return credentials.verifyCredentials(username, password);
     }
 }
-
-
-
-
-
-
-/*
-
-                if (inputUsername.isEmpty() || inputUsername.isEmpty()) {
-                    //Display a message toast to user to enter the details
-                    Toast.makeText(LoginActivity.this, "Please enter name and password!", Toast.LENGTH_LONG).show();
-                } else {
-                    // uses validate function
-                    isvalid = validate(inputUsername, inputPassword);
-                    //Incorrect Credentials
-                    if (!isvalid) {
-                        Toast.makeText(LoginActivity.this, "Incorrect Credentials", Toast.LENGTH_LONG).show();
-                    }
-
-                    if (isvalid) {
-                        //User inserts correct credentials
-                        String welcome = getString(R.string.welcome) + usernameEditText;
-                        Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
-                        // Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_LONG).show();
-                        //add code to go to next activity
-                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                    }
-
-                }
-            }
-        });
-
-
-    return view;
-    }
-
-    //Variables
-    private EditText usernameEditText;
-    private EditText passwordEditText;
-    private Button loginButton;
-    private Button signupButton;
-
-    private final String Username = "Admin";
-    private final String Password = "123456";
-
-    boolean isvalid = false;
-
-    @Nullable
-    @Override
-    public View onCreateView()
-}
-*/
-
 
 
 
