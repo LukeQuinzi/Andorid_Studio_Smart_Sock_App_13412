@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="password" type="id" />
+    <item name="login" type="id" />
+    <item name="username" type="id" />
+    <item name="loading" type="id" />
+    <item name="button_forgot_password" type="id" />
+    <item name="button_signup" type="id" />
+</resources>
