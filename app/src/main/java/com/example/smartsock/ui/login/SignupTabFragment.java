@@ -1,6 +1,7 @@
 package com.example.smartsock.ui.login;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -13,30 +14,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.smartsock.MainActivity;
 import com.example.smartsock.R;
 
 
 public class SignupTabFragment extends Fragment {
-    EditText email;
-    EditText username;
-    EditText phone;
-    EditText password;
-    EditText confirm_password;
-    EditText gender;
-    EditText DOB;
-    Button signup;
+    private EditText Email;
+    private EditText Sign_username;
+    private EditText Phone;
+    private EditText Sign_password;
+    private EditText Sign_confirm_password;
+    private EditText Gender;
+    private EditText DOB;
+    private Button Signup_button;
 
     float v=0;
-
-    String signinusername, signinpassword;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-    @Override
-    public void onAttach(Context context) {
-        sharedPreferences = context.getSharedPreferences("userFile",Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        super.onAttach(context);
-    }
+    public static Credentials credentials;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -45,15 +38,39 @@ public class SignupTabFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_signup_tab, container, false);
 
 
-        email = view.findViewById(R.id.signup_email);
-        username = view.findViewById(R.id.signup_username);
-        phone = view.findViewById(R.id.signup_phone);
-        password = view.findViewById(R.id.signup_password);
-        confirm_password = view.findViewById(R.id.signup_confirm_password);
-        gender = view.findViewById(R.id.gender);
+        Email = view.findViewById(R.id.signup_email);
+        Sign_username = view.findViewById(R.id.signup_username);
+        Phone = view.findViewById(R.id.signup_phone);
+        Sign_password = view.findViewById(R.id.signup_password);
+        Sign_confirm_password = view.findViewById(R.id.signup_confirm_password);
+        Gender = view.findViewById(R.id.gender);
         DOB = view.findViewById(R.id.DOB);
-        signup = view.findViewById(R.id.signup);
+        Signup_button = view.findViewById(R.id.signup);
 
+
+        Signup_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String sign_username = Sign_username.getText().toString();
+                String sign_password = Sign_password.getText().toString();
+                String sign_confirm_password = Sign_confirm_password.getText().toString();
+
+
+                if(validate(sign_username, sign_password,sign_confirm_password)){
+                    credentials = new Credentials(sign_username, sign_password);
+                    Intent intent = new Intent();
+                    intent.setClass(getActivity(), LoginActivity.class);
+                    getActivity().startActivity(intent);
+                    Toast.makeText(getContext(),"Signup Successful", Toast.LENGTH_SHORT).show();
+
+
+
+                }
+
+            }
+        });
+/*
         email.setTranslationX(800);
         username.setTranslationX(800);
         phone.setTranslationX(800);
@@ -80,7 +97,8 @@ public class SignupTabFragment extends Fragment {
         gender.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
         DOB.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
         signup.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-
+*/
+/*
 
         signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -97,9 +115,18 @@ public class SignupTabFragment extends Fragment {
 
             }
 
-        });
+        });*/
 
 
         return view;
+    }
+
+    private boolean validate(String username, String password, String confirm_password){
+        if(username.isEmpty() || password.length() < 8 && password != confirm_password) {
+            Toast.makeText(getContext(),"Enter all details, Password should be at least 8 characters, Ensure Confirm Passwords is correct", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }

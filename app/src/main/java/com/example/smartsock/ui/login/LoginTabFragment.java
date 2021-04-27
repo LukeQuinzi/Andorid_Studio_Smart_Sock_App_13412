@@ -25,24 +25,9 @@ public class LoginTabFragment extends Fragment {
     EditText passwordEditText;
     Button loginButton;
 
-    private final String Username = "Admin";
-    private final String Password = "123456";
-
-    boolean isvalid = false;
-
-    String inputUsername, inputPassword;
-
     float v = 0;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
+    boolean isValid = false;
 
-    @Override
-    public void onAttach(Context context) {
-        sharedPreferences = context.getSharedPreferences("userFile", Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-        super.onAttach(context);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +39,7 @@ public class LoginTabFragment extends Fragment {
         passwordEditText = view.findViewById(R.id.password);
         loginButton = view.findViewById(R.id.login);
 
-        usernameEditText.setTranslationX(800);
+/*      usernameEditText.setTranslationX(800);
         passwordEditText.setTranslationX(800);
         loginButton.setTranslationX(800);
 
@@ -64,28 +49,30 @@ public class LoginTabFragment extends Fragment {
 
         usernameEditText.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
         passwordEditText.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        loginButton.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
+        loginButton.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();*/
 
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 //gets whatever is input in the username field and converts the text into a string
-                inputUsername = usernameEditText.getText().toString();
-                inputPassword = passwordEditText.getText().toString();
+                String inputUsername = usernameEditText.getText().toString();
+                String inputPassword = passwordEditText.getText().toString();
 
                 if (inputUsername.isEmpty() || inputUsername.isEmpty()) {
                     //Display a message toast to user to enter the details
                     Toast.makeText(getContext(), "Please enter name and password!", Toast.LENGTH_LONG).show();
-                }else{
-                    if (inputUsername.equals(Username) && inputPassword.equals(Password)) {
-                        Toast.makeText(getContext(), "Login", Toast.LENGTH_LONG).show();
+                }else {
+
+                    isValid = validate(inputUsername, inputPassword);
+                    if (!isValid) {
+                        Toast.makeText(getContext(), "Incorrect Username or Password", Toast.LENGTH_LONG).show();
+
+                    } else {
                         Intent intent = new Intent();
                         intent.setClass(getActivity(), MainActivity.class);
                         getActivity().startActivity(intent);
-
                     }
-
                 }
             }
         });
@@ -93,6 +80,17 @@ public class LoginTabFragment extends Fragment {
 
         return view;
 
+    }
+
+    private boolean validate(String username, String userPassword){
+
+        if(SignupTabFragment.credentials != null){
+            if(username.equals(SignupTabFragment.credentials.getUsername()) && userPassword.equals(SignupTabFragment.credentials.getPassword())){
+                return true;
+            }
+        }
+
+        return false;
     }
 }
 
