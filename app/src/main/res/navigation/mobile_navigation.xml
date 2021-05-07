@@ -22,4 +22,29 @@
         android:name="com.example.smartsock.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_graph"
+        android:name="com.example.smartsock.Graph_Fragment"
+        android:label="Graph"
+        tools:layout="@layout/fragment_graph_" />
+
+    <fragment
+        android:id="@+id/nav_account"
+        android:name="com.example.smartsock.Account_Fragment"
+        android:label="Account"
+        tools:layout="@layout/fragment_account_" />
+
+    <fragment
+        android:id="@+id/nav_gradient"
+        android:name="com.example.smartsock.Gradient_Fragment"
+        android:label="Gradient"
+        tools:layout="@layout/fragment_gradient_" />
+    <fragment
+        android:id="@+id/battery_Fragment"
+        android:name="com.example.smartsock.battery_Fragment"
+        android:label="Battery"
+        tools:layout="@layout/fragment_battery_" />
+
+
 </navigation>

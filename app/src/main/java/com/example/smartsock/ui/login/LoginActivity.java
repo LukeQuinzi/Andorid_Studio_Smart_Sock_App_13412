@@ -42,8 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         TabLayout tabLayout = findViewById(R.id.tab_layout);
-        TabItem tabLogin = findViewById(R.id.tab_Login);
-        TabItem tabSignup = findViewById(R.id.tab_Signup);
         final ViewPager viewPager = findViewById(R.id.view_pager);
 
         PagerAdapter pagerAdapter = new PagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());

@@ -6,15 +6,42 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_round_home_24"
             android:title="@string/menu_home" />
+        <item
+            android:id="@+id/nav_account"
+            android:icon="@drawable/ic_person"
+            android:title="Account" />
+
+        <item
+            android:id="@+id/nav_graph"
+            android:icon="@drawable/ic_outline_timeline_24"
+            android:title="Graphs" />
+
+        <item
+            android:id="@+id/nav_gradient"
+            android:icon="@drawable/ic_baseline_grid_on_24"
+            android:title="Gradient" />
+
         <item
             android:id="@+id/nav_gallery"
             android:icon="@drawable/ic_menu_gallery"
             android:title="@string/menu_gallery" />
-        <item
+
+
+        <!--        <item
             android:id="@+id/nav_slideshow"
             android:icon="@drawable/ic_menu_slideshow"
-            android:title="@string/menu_slideshow" />
+            android:title="@string/menu_slideshow" />-->
+
+        <item
+            android:id="@+id/battery_Fragment"
+            android:icon="@drawable/ic_baseline_battery_charging_full_24"
+            android:title="Battery" />
+
+        <item
+            android:id="@+id/log_out"
+            android:icon="@drawable/ic_baseline_logout_24"
+            android:title="Log Out" />
     </group>
 </menu>
