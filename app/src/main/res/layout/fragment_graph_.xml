@@ -8,6 +8,7 @@
 
 
     <TextView
+        android:id="@+id/textView4"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@color/md_light_blue_900"
@@ -21,5 +22,17 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
+
+    <com.jjoe64.graphview.GraphView
+        android:id="@+id/Graph"
+        android:layout_width="333dp"
+        android:layout_height="392dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.205"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:layout_constraintVertical_bias="0.154" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
