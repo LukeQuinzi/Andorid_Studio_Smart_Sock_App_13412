@@ -15,7 +15,6 @@
     android:paddingBottom="@dimen/fragment_vertical_margin"
     tools:context=".ui.login.SignupTabFragment">
 
-
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
@@ -54,11 +53,9 @@
 
     <EditText
         android:id="@+id/DOB"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="57dp"
         android:layout_gravity="center"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
         android:background="@drawable/login_text_boxes"
@@ -71,7 +68,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.125"
-        app:layout_constraintStart_toEndOf="@+id/gender"
+        app:layout_constraintStart_toEndOf="@+id/relativeLayout2"
         app:layout_constraintTop_toBottomOf="@+id/signup_confirm_password"
         app:layout_constraintVertical_bias="0.028" />
 
@@ -85,6 +82,7 @@
         android:drawableStart="@drawable/ic_lock"
         android:drawableLeft="@drawable/ic_lock"
         android:drawablePadding="12dp"
+        android:paddingLeft="12dp"
         android:hint="@string/hint_confirm_password"
         android:inputType="textPassword"
         android:imeOptions="actionNext"
@@ -106,6 +104,7 @@
         android:drawableStart="@drawable/ic_lock"
         android:drawableLeft="@drawable/ic_lock"
         android:drawablePadding="12dp"
+        android:paddingLeft="12dp"
         android:hint="@string/hint_password"
         android:inputType="textPassword"
         android:imeOptions="actionNext"
@@ -127,6 +126,7 @@
         android:drawableStart="@drawable/ic_phone"
         android:drawableLeft="@drawable/ic_phone"
         android:drawablePadding="12dp"
+        android:paddingLeft="12dp"
         android:hint="@string/hint_phone"
         android:imeOptions="actionNext"
         android:minWidth="320dp"
@@ -147,6 +147,7 @@
         android:drawableStart="@drawable/ic_person"
         android:drawableLeft="@drawable/ic_person"
         android:drawablePadding="12dp"
+        android:paddingLeft="12dp"
         android:hint="@string/hint_username"
         android:imeOptions="actionNext"
         android:minWidth="320dp"
@@ -167,6 +168,7 @@
         android:drawableStart="@drawable/ic_mail"
         android:drawableLeft="@drawable/ic_mail"
         android:drawablePadding="12dp"
+        android:paddingLeft="12dp"
         android:hint="@string/prompt_email"
         android:imeOptions="actionNext"
         android:minWidth="320dp"
@@ -185,15 +187,46 @@
         android:layout_marginStart="32dp"
         android:layout_marginLeft="32dp"
         android:background="@drawable/login_text_boxes"
+        android:drawableStart="@drawable/ic_mail"
+        android:drawableLeft="@drawable/ic_mail"
+        android:drawablePadding="12dp"
+        android:paddingLeft="12dp"
         android:gravity="center"
         android:hint="@string/hint_gender"
         android:imeOptions="actionNext"
         android:minWidth="320dp"
         android:minHeight="50dp"
-        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signup_confirm_password"
         app:layout_constraintVertical_bias="0.025" />
+
+<!--
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="150dp"
+        android:layout_height="57dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:background="@drawable/login_text_boxes"
+        android:minWidth="320dp"
+        android:minHeight="50dp"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.021"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/signup_confirm_password"
+        app:layout_constraintVertical_bias="0.027">
+
+        <Spinner
+            android:id="@+id/gender"
+            style="@style/Widget.AppCompat.DropDownItem.Spinner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
+-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,8 @@
 package com.example.smartsock.ui.login;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.smartsock.MainActivity;
+import androidx.fragment.app.Fragment;
+
 import com.example.smartsock.R;
 
 import java.util.Map;
@@ -51,7 +47,6 @@ public class SignupTabFragment extends Fragment {
         Phone = view.findViewById(R.id.signup_phone);
         Sign_password = view.findViewById(R.id.signup_password);
         Sign_confirm_password = view.findViewById(R.id.signup_confirm_password);
-        Gender = view.findViewById(R.id.gender);
         DOB = view.findViewById(R.id.DOB);
         Signup_button = view.findViewById(R.id.signup);
 
@@ -109,52 +104,6 @@ public class SignupTabFragment extends Fragment {
 
             }
         });
-/*
-        email.setTranslationX(800);
-        username.setTranslationX(800);
-        phone.setTranslationX(800);
-        password.setTranslationX(800);
-        confirm_password.setTranslationX(800);
-        gender.setTranslationX(800);
-        DOB.setTranslationX(800);
-        signup.setTranslationX(800);
-
-        email.setAlpha(v);
-        username.setAlpha(v);
-        phone.setAlpha(v);
-        password.setAlpha(v);
-        confirm_password.setAlpha(v);
-        gender.setAlpha(v);
-        DOB.setAlpha(v);
-        signup.setAlpha(v);
-
-        email.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        username.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        phone.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        password.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        confirm_password.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        gender.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        DOB.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        signup.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-*/
-/*
-
-        signup.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //gets whatever is input in the username field and converts the text into a string
-                signinusername = username.getText().toString();
-                signinpassword = password.getText().toString();
-
-                editor.putString("signinusername",signinusername);
-                editor.putString("signinpassword",signinpassword);
-                editor.apply();
-                Toast.makeText(getContext(),"Registered", Toast.LENGTH_SHORT).show();
-
-            }
-
-        });*/
 
 
         return view;
