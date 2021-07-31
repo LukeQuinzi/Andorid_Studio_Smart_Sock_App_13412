@@ -25,9 +25,10 @@
         android:id="@+id/Graph"
         android:layout_width="333dp"
         android:layout_height="392dp"
-        android:layout_marginBottom="224dp"
+        android:layout_marginBottom="232dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.205"
         app:layout_constraintStart_toStartOf="parent" />
 
 

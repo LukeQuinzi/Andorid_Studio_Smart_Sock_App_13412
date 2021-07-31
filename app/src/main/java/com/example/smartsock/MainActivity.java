@@ -1,6 +1,7 @@
 package com.example.smartsock;
 
 import android.content.BroadcastReceiver;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -45,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
-        MenuItem logout = findViewById(R.id.log_out);
+        //MenuItem logout = findViewById(R.id.log_out);
         NavigationView navigationView = findViewById(R.id.nav_view);
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -63,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottom_nav_view = findViewById(R.id.bottom_nav_view);
         bottom_nav_view.setOnNavigationItemSelectedListener(navListener);*/
 
-
     }
+
 
 /*    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
         new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -93,6 +94,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
+
+        MenuItem logout = menu.findItem(R.id.action_logout2);
+        logout.setOnMenuItemClickListener(
+        new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                return false;
+            }
+        });
+
         return true;
     }
 

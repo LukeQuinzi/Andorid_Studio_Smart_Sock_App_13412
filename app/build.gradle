@@ -46,6 +46,7 @@ dependencies {
 
     //GraphView Dependency
     implementation 'com.jjoe64:graphview:4.2.2'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

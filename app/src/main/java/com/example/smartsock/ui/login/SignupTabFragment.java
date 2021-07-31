@@ -48,6 +48,7 @@ public class SignupTabFragment extends Fragment {
         Sign_password = view.findViewById(R.id.signup_password);
         Sign_confirm_password = view.findViewById(R.id.signup_confirm_password);
         DOB = view.findViewById(R.id.DOB);
+        Gender = view.findViewById(R.id.signup_gender);
         Signup_button = view.findViewById(R.id.signup);
 
         credentials = new Credentials();
@@ -72,7 +73,10 @@ public class SignupTabFragment extends Fragment {
                 String sign_username = Sign_username.getText().toString();
                 String sign_password = Sign_password.getText().toString();
                 String sign_confirm_password = Sign_confirm_password.getText().toString();
-
+                String email = Email.getText().toString();
+                String phone = Phone.getText().toString();
+                String dob = DOB.getText().toString();
+                String gender = Gender.getText().toString();
 
                 if(validate(sign_username, sign_password,sign_confirm_password)){
 
@@ -81,14 +85,19 @@ public class SignupTabFragment extends Fragment {
 
                     }else {
                         //Only if the username is unique we add the credentials to the map and register the user
-                        credentials.addCredentials(sign_username, sign_password);
+                        credentials.addCredentials(sign_username,sign_password,email,phone,dob,gender);
 
                         /* Store Credentials */
-                        // Credentials are stores in location Device File Explorer >> data >> data >> com.example.smartsock >> CredentialsDB
+                        // Credentials are stored in location Device File Explorer >> data >> data >> com.example.smartsock >> shared_prefs >> CredentialsDB
                         sharedPreferencesEditor.putString(sign_username, sign_password);
 
-                        sharedPreferencesEditor.putString("LastSavedUsername", sign_username);
-                        sharedPreferencesEditor.putString("LastSavedPassword", sign_password);
+                        sharedPreferencesEditor.putString("SavedUsername", sign_username);
+                        sharedPreferencesEditor.putString("SavedPassword", sign_password);
+                        sharedPreferencesEditor.putString("SavedEmail", email);
+                        sharedPreferencesEditor.putString("SavedPhone", phone);
+                        sharedPreferencesEditor.putString("SavedDOB", dob);
+                        sharedPreferencesEditor.putString("SavedGender", gender);
+
 
                         /* Commits the changes and adds them to the file */
                         sharedPreferencesEditor.apply();

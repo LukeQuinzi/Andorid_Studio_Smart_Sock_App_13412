@@ -11,7 +11,7 @@ import java.util.Map;
 public class Credentials {
     HashMap<String, String> credentialsMapper = new HashMap<String, String>();
 
-    public void addCredentials(String username, String password){
+    public void addCredentials(String sign_username, String sign_password, String email, String phone, String username, String password){
         credentialsMapper.put(username,password);
 
     }

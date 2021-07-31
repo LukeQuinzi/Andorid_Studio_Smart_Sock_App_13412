@@ -45,7 +45,7 @@
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:backgroundTint="@color/md_light_blue_700"
+        app:backgroundTint="@color/md_blue_900"
         app:backgroundTintMode="add"
         app:layout_constraintBottom_toTopOf="@+id/button_forgot_password"
         app:layout_constraintEnd_toEndOf="parent"
