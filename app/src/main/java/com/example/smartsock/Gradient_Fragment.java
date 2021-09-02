@@ -1,20 +1,17 @@
 package com.example.smartsock;
 
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.fragment.app.Fragment;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.HeatDataEntry;
-import com.anychart.chart.common.dataentry.ValueDataEntry;
 import com.anychart.charts.HeatMap;
-import com.anychart.charts.Pie;
 import com.anychart.enums.SelectionMode;
 import com.anychart.graphics.vector.SolidFill;
 
@@ -71,6 +68,14 @@ public class Gradient_Fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        //VAraibles
+        /*String row = "5";
+        String col = "5";*/
+
+
+
+
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gradient_, container, false);
 
@@ -114,8 +119,22 @@ public class Gradient_Fragment extends Fragment {
         //Colours
         //Red = #d84315; Orange = #ef6c00; Yellow = #ffb74d; Blue = #90caf9"
 
+        // make this scaleable
+
+
         List<DataEntry> data = new ArrayList<>();
-        //Row 1
+
+        for (int row = 0; row <= 5; row++){
+            for (int col = 1; col <= 5; col++) {
+
+
+                data.add(new CustomHeatDataEntry(row, col, 0, "#90caf9"));
+
+            }
+
+        }
+
+/*        //Row 1
         data.add(new CustomHeatDataEntry("1","1",0, "#90caf9"));
         data.add(new CustomHeatDataEntry("1","2",0, "#90caf9"));
         data.add(new CustomHeatDataEntry("1","3",0, "#90caf9"));
@@ -176,7 +195,7 @@ public class Gradient_Fragment extends Fragment {
         data.add(new CustomHeatDataEntry("7","4",0, "#90caf9"));
         data.add(new CustomHeatDataEntry("7","5",0, "#90caf9"));
         data.add(new CustomHeatDataEntry("7","6",0, "#90caf9"));
-        data.add(new CustomHeatDataEntry("7","7",0, "#90caf9"));
+        data.add(new CustomHeatDataEntry("7","7",0, "#90caf9"));*/
 
         riskMap.data(data);
         anyChartView.setChart(riskMap);
@@ -186,8 +205,8 @@ public class Gradient_Fragment extends Fragment {
     }
 
     private class CustomHeatDataEntry extends HeatDataEntry {
-        CustomHeatDataEntry(String x, String y, Integer heat, String fill) {
-            super(x, y, heat);
+        CustomHeatDataEntry(int row, int col, Integer heat, String fill) {
+            super(Integer.toString(row), Integer.toString(col), heat);
             setValue("fill", fill);
         }
     }
