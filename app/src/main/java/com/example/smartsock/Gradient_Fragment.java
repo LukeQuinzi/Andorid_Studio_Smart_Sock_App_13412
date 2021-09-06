@@ -1,9 +1,13 @@
 package com.example.smartsock;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -12,6 +16,7 @@ import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.HeatDataEntry;
 import com.anychart.charts.HeatMap;
+import com.anychart.core.ui.table.Row;
 import com.anychart.enums.SelectionMode;
 import com.anychart.graphics.vector.SolidFill;
 
@@ -33,6 +38,7 @@ public class Gradient_Fragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Object AnyChartView;
 
     public Gradient_Fragment() {
         // Required empty public constructor
@@ -69,17 +75,14 @@ public class Gradient_Fragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        //VAraibles
-        /*String row = "5";
-        String col = "5";*/
-
-
-
-
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_gradient_, container, false);
 
-
+        //Getting values in row and col inputs
+        EditText Row = view.findViewById(R.id.edittextRow);
+        EditText Col = view.findViewById(R.id.edittextCol);
+        Button apply_button = view.findViewById(R.id.apply_button);
+        Button clear =view.findViewById(R.id.clear);
         AnyChartView anyChartView = view.findViewById(R.id.any_chart_view);
         HeatMap riskMap = AnyChart.heatMap();
         riskMap.hovered()
@@ -87,11 +90,11 @@ public class Gradient_Fragment extends Fragment {
                 .fill(new SolidFill("#545f69", 1d))
                 .labels("{ fontColor: '#fff' }");
         riskMap.interactivity().selectionMode(SelectionMode.NONE);
-        riskMap.title().enabled(true);
+        riskMap.title().enabled(false);
         riskMap.title()
                 .text("Left Side of Limb")
                 .padding(0d, 0d, 20d, 0d);
-        riskMap.labels().enabled(true);
+        riskMap.labels().enabled(false);
         riskMap.labels()
                 .minFontSize(14d)
                 .format("function() {\n" +
@@ -119,20 +122,81 @@ public class Gradient_Fragment extends Fragment {
         //Colours
         //Red = #d84315; Orange = #ef6c00; Yellow = #ffb74d; Blue = #90caf9"
 
-        // make this scaleable
+        // make this scalable
+        apply_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //gets whatever is input in the username field and converts the text into a string
+
+                String inputRow = Row.getText().toString();
+                String inputCol = Col.getText().toString();
+
+                List<DataEntry> data = new ArrayList<>();
+
+                //data.add(new CustomHeatDataEntry(inputRow,inputCol,0, "#90caf9"));
+                if (inputRow.isEmpty() || inputCol.isEmpty() ) {
+                    //Display a message toast to user to enter the details
+                    Toast.makeText(getContext(), "Please enter both number of Rows and Columns!", Toast.LENGTH_LONG).show();
+                }
+
+                else {
+                    if (Integer.parseInt(inputRow) == 0 || Integer.parseInt(inputCol) == 0 ){
+                        Toast.makeText(getContext(), "Please enter values greater then 0", Toast.LENGTH_LONG).show();
+                    }
+
+                    else {
+
+                        for (int row = 1; row <= Integer.parseInt(inputRow); row++) {
+                            for (int col = 1; col <= Integer.parseInt(inputCol); col++) {
+                                data.add(new  CustomHeatDataEntry(row, col, 0, "#90caf9"));
+
+                            }
+
+                        }
 
 
-        List<DataEntry> data = new ArrayList<>();
+                        riskMap.data(data);
+                        anyChartView.setChart(riskMap); //This loads the graph again
+                        Row.setText("");
+                        Col.setText("");
 
-        for (int row = 0; row <= 5; row++){
-            for (int col = 1; col <= 5; col++) {
+                    }
 
-
-                data.add(new CustomHeatDataEntry(row, col, 0, "#90caf9"));
+                }
 
             }
 
+
+
+
+        });
+
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //gets whatever is input in the username field and converts the text into a string
+                anyChartView.clear();  //This remove previous graph
+                anyChartView.recomputeViewAttributes(anyChartView);
+            }
+        });
+
+
+        return view;
+
+    }
+
+    private class CustomHeatDataEntry extends HeatDataEntry {
+        CustomHeatDataEntry(int row, int col, Integer voltage, String fill) {
+            super(String.valueOf(row), String.valueOf(col), voltage);
+
+            if (voltage >= 3.3)
+                setValue("fill", fill);
+
+
         }
+    }
+}
+
 
 /*        //Row 1
         data.add(new CustomHeatDataEntry("1","1",0, "#90caf9"));
@@ -196,18 +260,3 @@ public class Gradient_Fragment extends Fragment {
         data.add(new CustomHeatDataEntry("7","5",0, "#90caf9"));
         data.add(new CustomHeatDataEntry("7","6",0, "#90caf9"));
         data.add(new CustomHeatDataEntry("7","7",0, "#90caf9"));*/
-
-        riskMap.data(data);
-        anyChartView.setChart(riskMap);
-
-        return view;
-
-    }
-
-    private class CustomHeatDataEntry extends HeatDataEntry {
-        CustomHeatDataEntry(int row, int col, Integer heat, String fill) {
-            super(Integer.toString(row), Integer.toString(col), heat);
-            setValue("fill", fill);
-        }
-    }
-}

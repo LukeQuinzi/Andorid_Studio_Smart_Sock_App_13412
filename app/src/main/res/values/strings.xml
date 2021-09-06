@@ -57,4 +57,5 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="password">Password</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="input_number_of_senors_in_a_row_and_column_below_then_press_apply">Input number of senors in a row &amp; column, press APPLY:</string>
 </resources>

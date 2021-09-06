@@ -17,11 +17,6 @@
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
-    <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="com.example.smartsock.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
 
     <fragment
         android:id="@+id/nav_graph"
@@ -38,7 +33,7 @@
     <fragment
         android:id="@+id/nav_gradient"
         android:name="com.example.smartsock.Gradient_Fragment"
-        android:label="Gradient"
+        android:label="2D Array Pressure Map"
         tools:layout="@layout/fragment_gradient_" />
     <fragment
         android:id="@+id/battery_Fragment"

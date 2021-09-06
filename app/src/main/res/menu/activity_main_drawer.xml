@@ -21,7 +21,7 @@
         <item
             android:id="@+id/nav_gradient"
             android:icon="@drawable/ic_baseline_grid_on_24"
-            android:title="Gradient" />
+            android:title="2D Array Pressure Map" />
 
         <item
             android:id="@+id/nav_gallery"

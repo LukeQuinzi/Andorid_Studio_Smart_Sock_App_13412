@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
+   <!-- <item
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_menu_camera"
         android:title="@string/menu_home" />
@@ -13,6 +13,6 @@
     <item
         android:id="@+id/gradient_Fragment"
         android:icon="@drawable/ic_baseline_grid_on_24"
-        android:title="Gradient" />
+        android:title="Gradient" />-->
 
 </menu>
