@@ -21,13 +21,19 @@ import com.anychart.enums.SelectionMode;
 import com.anychart.graphics.vector.SolidFill;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Gradient_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
+
+
+
+
 public class Gradient_Fragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
@@ -85,6 +91,7 @@ public class Gradient_Fragment extends Fragment {
         Button clear =view.findViewById(R.id.clear);
         AnyChartView anyChartView = view.findViewById(R.id.any_chart_view);
         HeatMap riskMap = AnyChart.heatMap();
+
         riskMap.hovered()
                 .stroke("6 #fff")
                 .fill(new SolidFill("#545f69", 1d))
@@ -112,26 +119,48 @@ public class Gradient_Fragment extends Fragment {
                 .useHtml(true)
                 .titleFormat("function() {\n" +
                         "      var namesList = [\"Low\", \"Med\", \"High\", \"Ext\"];\n" +
-                        "      return '<b>' + namesList[this.heat] + '</b> Pressure';\n" +
+                        "      return '<b>' + namesList[this.heat] + '</b> Pressure' + '</b> ' + this.heat;\n" +
                         "    }")
                 .format("function () {\n" +
                         "       return '<span style=\"color: #CECECE\">Row (x): </span>' + this.x + '<br/>' +\n" +
+                        "           '<span style=\"color: #CECECE\">Voltage (y): </span>' + this.heat;\n" +
                         "           '<span style=\"color: #CECECE\">Column (y): </span>' + this.y;\n" +
                         "   }");
 
-        //Colours
-        //Red = #d84315; Orange = #ef6c00; Yellow = #ffb74d; Blue = #90caf9"
+        double [][] voltage_values = {{0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55},
+                                      {0.55, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 0.55},
+                                      {0.55, 1.10, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.10, 0.55},
+                                      {0.55, 1.10, 1.65, 2.20, 2.75, 2.75, 2.75, 2.20, 1.65, 1.10, 0.55},
+                                      {0.55, 1.10, 1.65, 2.20, 2.75, 0.55, 2.75, 2.20, 1.65, 1.10, 0.55},
+                                      {0.55, 1.10, 1.65, 2.20, 2.75, 0.55, 2.75, 2.20, 1.65, 1.10, 0.55},
+                                      {0.55, 1.10, 1.65, 2.20, 2.75, 2.75, 2.75, 2.20, 1.65, 1.10, 0.55},
+                                      {0.55, 1.10, 1.65, 2.20, 2.20, 2.20, 2.20, 2.20, 1.65, 1.10, 0.55},
+                                      {0.55, 1.10, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.10, 0.55},
+                                      {0.55, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 0.55},
+                                      {0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55}};
+
+
+        List<DataEntry> data = new ArrayList<>();
+        for (int row = 1; row <= voltage_values.length; row++) {
+            for (int col = 1; col <= voltage_values[0].length; col++) {
+                data.add(new  CustomHeatDataEntry(row, col, voltage_values[row][col], "#90caf9"));
+            }
+        }
+
+        riskMap.data(data);
+        anyChartView.setChart(riskMap); //This loads the graph again
+        Row.setText("");
+        Col.setText("");
+
+        //Colours: Red = #d84315; Orange = #ef6c00; Yellow = #ffb74d; Blue = #90caf9"
 
         // make this scalable
         apply_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //gets whatever is input in the username field and converts the text into a string
-
                 String inputRow = Row.getText().toString();
                 String inputCol = Col.getText().toString();
-
-                List<DataEntry> data = new ArrayList<>();
 
                 //data.add(new CustomHeatDataEntry(inputRow,inputCol,0, "#90caf9"));
                 if (inputRow.isEmpty() || inputCol.isEmpty() ) {
@@ -139,44 +168,38 @@ public class Gradient_Fragment extends Fragment {
                     Toast.makeText(getContext(), "Please enter both number of Rows and Columns!", Toast.LENGTH_LONG).show();
                 }
 
-                else {
-                    if (Integer.parseInt(inputRow) == 0 || Integer.parseInt(inputCol) == 0 ){
+                else if (Integer.parseInt(inputRow) == 0 || Integer.parseInt(inputCol) == 0 ){
                         Toast.makeText(getContext(), "Please enter values greater then 0", Toast.LENGTH_LONG).show();
-                    }
-
-                    else {
-
-                        for (int row = 1; row <= Integer.parseInt(inputRow); row++) {
-                            for (int col = 1; col <= Integer.parseInt(inputCol); col++) {
-                                data.add(new  CustomHeatDataEntry(row, col, 0, "#90caf9"));
-
-                            }
-
-                        }
-
-
-                        riskMap.data(data);
-                        anyChartView.setChart(riskMap); //This loads the graph again
-                        Row.setText("");
-                        Col.setText("");
-
-                    }
-
                 }
 
+                else {
+                    //anyChartView.clear();
+                    List<DataEntry> data = new ArrayList<>();
+                    for (int row = 1; row <= Integer.parseInt(inputRow); row++) {
+                        for (int col = 1; col <= Integer.parseInt(inputCol); col++) {
+                            data.add(new  CustomHeatDataEntry(row, col, 0.1, "#90caf9"));
+                        }
+                    }
+
+                    riskMap.data(data);
+                    anyChartView.setChart(riskMap);
+                    Row.setText("");
+                    Col.setText("");
+
+                }
             }
-
-
-
-
         });
 
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //gets whatever is input in the username field and converts the text into a string
-                anyChartView.clear();  //This remove previous graph
-                anyChartView.recomputeViewAttributes(anyChartView);
+                //List<DataEntry> data = new ArrayList<>();
+                //anyChartView.clear();
+                //data.add(new  CustomHeatDataEntry(0, 0, 0, "#90caf9"));
+                //riskMap.data(data);
+                //anyChartView.setChart(riskMap);
+                //anyChartView.clear();
+                //anyChartView.recomputeViewAttributes(anyChartView);
             }
         });
 
@@ -186,19 +209,30 @@ public class Gradient_Fragment extends Fragment {
     }
 
     private class CustomHeatDataEntry extends HeatDataEntry {
-        CustomHeatDataEntry(int row, int col, Integer voltage, String fill) {
+        CustomHeatDataEntry(int row, int col, int voltage, String fill) {
             super(String.valueOf(row), String.valueOf(col), voltage);
-
-            if (voltage >= 3.3)
-                setValue("fill", fill);
+            setValue("fill", fill);
 
 
         }
     }
+
+
+    public void randomarray(int numRows, int numCols, int lowerlim, int upperlimit) {
+        int [][] array = new int[numRows][numCols];
+        Random random = new Random();
+        for(int i = 0; i < array.length; i++){
+            for (int j = 0; j < array[i].length; j++) {
+                array[i][j] = random.nextInt(upperlimit - lowerlim) + lowerlim;
+            }
+        }
+        System.out.println(Arrays.toString(array));
+
+    }
 }
 
-
-/*        //Row 1
+/*
+//Row 1
         data.add(new CustomHeatDataEntry("1","1",0, "#90caf9"));
         data.add(new CustomHeatDataEntry("1","2",0, "#90caf9"));
         data.add(new CustomHeatDataEntry("1","3",0, "#90caf9"));
@@ -215,48 +249,4 @@ public class Gradient_Fragment extends Fragment {
         data.add(new CustomHeatDataEntry("2","5",1, "#ffb74d"));
         data.add(new CustomHeatDataEntry("2","6",1, "#ffb74d"));
         data.add(new CustomHeatDataEntry("2","7",0, "#90caf9"));
-
-        //Row 3
-        data.add(new CustomHeatDataEntry("3","1",0, "#90caf9"));
-        data.add(new CustomHeatDataEntry("3","2",1, "#ffb74d"));
-        data.add(new CustomHeatDataEntry("3","3",2, "#ef6c00"));
-        data.add(new CustomHeatDataEntry("3","4",2, "#ef6c00"));
-        data.add(new CustomHeatDataEntry("3","5",2, "#ef6c00"));
-        data.add(new CustomHeatDataEntry("3","6",1, "#ffb74d"));
-        data.add(new CustomHeatDataEntry("3","7",0, "#90caf9"));
-
-        //Row 4
-        data.add(new CustomHeatDataEntry("4","1",0, "#90caf9"));
-        data.add(new CustomHeatDataEntry("4","2",1, "#ffb74d"));
-        data.add(new CustomHeatDataEntry("4","3",2, "#ef6c00"));
-        data.add(new CustomHeatDataEntry("4","4",3, "#d84315"));
-        data.add(new CustomHeatDataEntry("4","5",2, "#ef6c00"));
-        data.add(new CustomHeatDataEntry("4","6",1, "#ffb74d"));
-        data.add(new CustomHeatDataEntry("4","7",0, "#90caf9"));
-
-        //Row 5
-        data.add(new CustomHeatDataEntry("5","1",0, "#90caf9"));
-        data.add(new CustomHeatDataEntry("5","2",1, "#ffb74d"));
-        data.add(new CustomHeatDataEntry("5","3",2, "#ef6c00"));
-        data.add(new CustomHeatDataEntry("5","4",2, "#ef6c00"));
-        data.add(new CustomHeatDataEntry("5","5",2, "#ef6c00"));
-        data.add(new CustomHeatDataEntry("5","6",1, "#ffb74d"));
-        data.add(new CustomHeatDataEntry("5","7",0, "#90caf9"));
-
-        //Row 6
-        data.add(new CustomHeatDataEntry("6","1",0, "#90caf9"));
-        data.add(new CustomHeatDataEntry("6","2",1, "#ffb74d"));
-        data.add(new CustomHeatDataEntry("6","3",1, "#ffb74d"));
-        data.add(new CustomHeatDataEntry("6","4",1, "#ffb74d"));
-        data.add(new CustomHeatDataEntry("6","5",1, "#ffb74d"));
-        data.add(new CustomHeatDataEntry("6","6",1, "#ffb74d"));
-        data.add(new CustomHeatDataEntry("6","7",0, "#90caf9"));
-
-        //Row 7
-        data.add(new CustomHeatDataEntry("7","1",0, "#90caf9"));
-        data.add(new CustomHeatDataEntry("7","2",0, "#90caf9"));
-        data.add(new CustomHeatDataEntry("7","3",0, "#90caf9"));
-        data.add(new CustomHeatDataEntry("7","4",0, "#90caf9"));
-        data.add(new CustomHeatDataEntry("7","5",0, "#90caf9"));
-        data.add(new CustomHeatDataEntry("7","6",0, "#90caf9"));
-        data.add(new CustomHeatDataEntry("7","7",0, "#90caf9"));*/
+*/

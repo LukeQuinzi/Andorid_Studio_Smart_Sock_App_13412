@@ -76,18 +76,6 @@ public class LoginTabFragment extends Fragment {
 
         }
 
-/*      //Animation
-        usernameEditText.setTranslationX(800);
-        passwordEditText.setTranslationX(800);
-        loginButton.setTranslationX(800);
-
-        usernameEditText.setAlpha(v);
-        passwordEditText.setAlpha(v);
-        loginButton.setAlpha(v);
-
-        usernameEditText.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        passwordEditText.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();
-        loginButton.animate().translationX(0).alpha(1).setDuration(800).setStartDelay(300).start();*/
 
         Rememberme.setOnClickListener(new View.OnClickListener(){
             @Override
