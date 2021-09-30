@@ -25,45 +25,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Gradient_Fragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-
-
-
-
 public class Gradient_Fragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private Object AnyChartView;
 
     public Gradient_Fragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment gradient_Fragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static Gradient_Fragment newInstance(String param1, String param2) {
         Gradient_Fragment fragment = new Gradient_Fragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -71,10 +41,7 @@ public class Gradient_Fragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -127,31 +94,6 @@ public class Gradient_Fragment extends Fragment {
                         "           '<span style=\"color: #CECECE\">Column (y): </span>' + this.y;\n" +
                         "   }");
 
-        double [][] voltage_values = {{0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55},
-                                      {0.55, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 0.55},
-                                      {0.55, 1.10, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.10, 0.55},
-                                      {0.55, 1.10, 1.65, 2.20, 2.75, 2.75, 2.75, 2.20, 1.65, 1.10, 0.55},
-                                      {0.55, 1.10, 1.65, 2.20, 2.75, 0.55, 2.75, 2.20, 1.65, 1.10, 0.55},
-                                      {0.55, 1.10, 1.65, 2.20, 2.75, 0.55, 2.75, 2.20, 1.65, 1.10, 0.55},
-                                      {0.55, 1.10, 1.65, 2.20, 2.75, 2.75, 2.75, 2.20, 1.65, 1.10, 0.55},
-                                      {0.55, 1.10, 1.65, 2.20, 2.20, 2.20, 2.20, 2.20, 1.65, 1.10, 0.55},
-                                      {0.55, 1.10, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.10, 0.55},
-                                      {0.55, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 0.55},
-                                      {0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55}};
-
-
-        List<DataEntry> data = new ArrayList<>();
-        for (int row = 1; row <= voltage_values.length; row++) {
-            for (int col = 1; col <= voltage_values[0].length; col++) {
-                data.add(new  CustomHeatDataEntry(row, col, voltage_values[row][col], "#90caf9"));
-            }
-        }
-
-        riskMap.data(data);
-        anyChartView.setChart(riskMap); //This loads the graph again
-        Row.setText("");
-        Col.setText("");
-
         //Colours: Red = #d84315; Orange = #ef6c00; Yellow = #ffb74d; Blue = #90caf9"
 
         // make this scalable
@@ -175,17 +117,15 @@ public class Gradient_Fragment extends Fragment {
                 else {
                     //anyChartView.clear();
                     List<DataEntry> data = new ArrayList<>();
-                    for (int row = 1; row <= Integer.parseInt(inputRow); row++) {
-                        for (int col = 1; col <= Integer.parseInt(inputCol); col++) {
-                            data.add(new  CustomHeatDataEntry(row, col, 0.1, "#90caf9"));
+                    for (int row = 0; row <= Integer.parseInt(inputRow) - 1; row++) {
+                        for (int col = 0; col <= Integer.parseInt(inputCol) - 1; col++) {
+                            data.add(new  CustomHeatDataEntry(row, col, 1, "#90caf9"));
                         }
                     }
-
                     riskMap.data(data);
                     anyChartView.setChart(riskMap);
                     Row.setText("");
                     Col.setText("");
-
                 }
             }
         });
@@ -194,7 +134,7 @@ public class Gradient_Fragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //List<DataEntry> data = new ArrayList<>();
-                //anyChartView.clear();
+                anyChartView.clear();
                 //data.add(new  CustomHeatDataEntry(0, 0, 0, "#90caf9"));
                 //riskMap.data(data);
                 //anyChartView.setChart(riskMap);
@@ -203,17 +143,13 @@ public class Gradient_Fragment extends Fragment {
             }
         });
 
-
         return view;
-
     }
 
     private class CustomHeatDataEntry extends HeatDataEntry {
         CustomHeatDataEntry(int row, int col, int voltage, String fill) {
             super(String.valueOf(row), String.valueOf(col), voltage);
             setValue("fill", fill);
-
-
         }
     }
 
@@ -227,7 +163,6 @@ public class Gradient_Fragment extends Fragment {
             }
         }
         System.out.println(Arrays.toString(array));
-
     }
 }
 

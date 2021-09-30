@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_graph, R.id.nav_account, R.id.nav_gradient,R.id.battery_Fragment)
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_graph, R.id.nav_account, R.id.nav_gradient,
+                R.id.nav_2dArrayGraph,R.id.battery_Fragment, R.id.manual_Fragment)
                 .setDrawerLayout(drawer)
                 .build();
 
@@ -60,35 +61,9 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
-/*
-        BottomNavigationView bottom_nav_view = findViewById(R.id.bottom_nav_view);
-        bottom_nav_view.setOnNavigationItemSelectedListener(navListener);*/
 
     }
 
-
-/*    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
-        new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                Fragment selectedFragment = null;
-
-                switch (item.getItemId()){
-                    case R.id.nav_home:
-                        selectedFragment = new HomeFragment();
-                        break;
-                    case R.id.nav_graph:
-                        selectedFragment = new Graph_Fragment();
-                        break;
-                    case R.id.nav_gradient:
-                        selectedFragment = new Gradient_Fragment();
-                        break;
-                }
-                getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, selectedFragment).commit();
-
-                return true;
-            }
-        };*/
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

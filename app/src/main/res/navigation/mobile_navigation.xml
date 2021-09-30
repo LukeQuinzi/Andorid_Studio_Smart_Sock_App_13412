@@ -17,7 +17,6 @@
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
-
     <fragment
         android:id="@+id/nav_graph"
         android:name="com.example.smartsock.Graph_Fragment"
@@ -33,13 +32,32 @@
     <fragment
         android:id="@+id/nav_gradient"
         android:name="com.example.smartsock.Gradient_Fragment"
-        android:label="2D Array Pressure Map"
+        android:label="2D Array Pressure Map (Set Size)"
         tools:layout="@layout/fragment_gradient_" />
+
     <fragment
         android:id="@+id/battery_Fragment"
         android:name="com.example.smartsock.battery_Fragment"
         android:label="Battery"
         tools:layout="@layout/fragment_battery_" />
+
+    <fragment
+        android:id="@+id/nav_2dArrayGraph"
+        android:name="com.example.smartsock.fragment_2dArrayGraph"
+        android:label="2D Array Pressure Map"
+        tools:layout="@layout/fragment_2d_array_graph" />
+
+    <fragment
+        android:id="@+id/manual_Fragment"
+        android:name="com.example.smartsock.fragment_manual"
+        android:label="User Manual"
+        tools:layout="@layout/fragment_manual" />
+
+    <activity
+        android:id="@+id/settingsActivity"
+        android:name="com.example.smartsock.SettingsActivity"
+        android:label="SettingsActivity"
+        tools:layout="@layout/settings_activity" />
 
 
 </navigation>

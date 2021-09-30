@@ -21,6 +21,11 @@
         <item
             android:id="@+id/nav_gradient"
             android:icon="@drawable/ic_baseline_grid_on_24"
+            android:title="2D Array Pressure Map (Set Size)" />
+
+        <item
+            android:id="@+id/nav_2dArrayGraph"
+            android:icon="@drawable/ic_baseline_grid_on_24"
             android:title="2D Array Pressure Map" />
 
         <item
@@ -32,6 +37,11 @@
             android:id="@+id/battery_Fragment"
             android:icon="@drawable/ic_baseline_battery_charging_full_24"
             android:title="Battery" />
+
+        <item
+            android:id="@+id/manual_Fragment"
+            android:icon="@drawable/ic_baseline_menu_book_24"
+            android:title="User Manual" />
 
     </group>
 </menu>
