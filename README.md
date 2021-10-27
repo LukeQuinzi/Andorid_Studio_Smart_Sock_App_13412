@@ -1,4 +1,4 @@
-# Repository Description
+# Repository Description: SMart Sock APP 13412
 
 Code developed for the Honours Project EEE-13412 (2021) at the University of Adelaide: The Smart Sock for Aiding Prosthesis Fit and Preventing Pressure Sores in Leg Amputees
 
