@@ -2,27 +2,49 @@ package com.example.smartsock;
 
 import static java.lang.Math.round;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import android.os.Handler;
+import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.anychart.AnyChart;
 import com.anychart.AnyChartView;
 import com.anychart.chart.common.dataentry.DataEntry;
 import com.anychart.chart.common.dataentry.HeatDataEntry;
 import com.anychart.charts.HeatMap;
-import com.anychart.enums.ScaleTypes;
 import com.anychart.enums.SelectionMode;
 import com.anychart.graphics.vector.SolidFill;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class fragment_2dArrayGraph extends Fragment {
+
+    TextView incomingdata;
+    StringBuilder messages;
+
+    String text;
+    StringBuilder text2;
+    String singlestring;
+    String[][] values_array;
+    int num_rows = 10;
+    int num_cols = 10;
+    String pressure_number = "hi";
+
 
     public fragment_2dArrayGraph() {
         // Required empty public constructor
@@ -37,8 +59,21 @@ public class fragment_2dArrayGraph extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
     }
+
+    BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            text = intent.getStringExtra("theMessage");
+            text2 = messages.append(text);
+            singlestring = text2.toString();
+            incomingdata.setText(singlestring);
+            //incomingdata.setText("")
+        }
+    };
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,10 +81,17 @@ public class fragment_2dArrayGraph extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_2d_array_graph, container, false);
 
-        //Getting values in row and col inputs
-        AnyChartView anyChartView = view.findViewById(R.id.any_chart_view);
-        HeatMap riskMap = AnyChart.heatMap();
 
+        incomingdata =(TextView) view.findViewById(R.id.incomingdata);
+        messages = new StringBuilder();
+        incomingdata.setMovementMethod(new ScrollingMovementMethod());
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mReceiver, new IntentFilter("incomingMessage"));
+
+
+        // Create HeatMap
+        HeatMap riskMap = AnyChart.heatMap();
+        riskMap.credits(false);
+        // Heatmap Features
         riskMap.hovered()
                 .stroke("6 #fff")
                 .fill(new SolidFill("#545f69", 1d))
@@ -84,41 +126,75 @@ public class fragment_2dArrayGraph extends Fragment {
                         "           '<span style=\"color: #CECECE\">Voltage (y): </span>' + this.heat;\n" +
                         "           '<span style=\"color: #CECECE\">Column (y): </span>' + this.y;\n" +
                         "   }");
+        //riskMap.legend(true);
 
-        double [][] voltage_values = {{0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55},
-                                    {3, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 0.55},
-                                    {3, 1.10, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.10, 0.55},
-                                    {0.55, 0.88, 1.65, 2.20, 2.20, 2.20, 2.20, 2.20, 1.65, 1.10, 0.55},
-                                    {0.55, 1.10, 1.65, 2.20, 2.75, 2.75, 2.75, 2.20, 1.65, 1.10, 0.55},
-                                    {0.55, 1.10, 1.65, 2.20, 2.75, 3.30, 2.75, 2.20, 1.65, 1.10, 0.55},
-                                    {0.55, 1.10, 1.65, 2.20, 2.75, 2.75, 2.75, 2.20, 1.65, 1.10, 0.55},
-                                    {0.55, 1.10, 1.65, 2.20, 2.20, 2.20, 2.20, 2.20, 1.65, 1.10, 0.55},
-                                    {0.55, 1.10, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.65, 1.10, 0.55},
-                                    {0.55, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 1.10, 0.55},
-                                    {0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55, 0.55}};
-        float Max_pressure = 330;
+        riskMap.xScroller().enabled(true);
+        //riskMap.xZoom().setToPointsCount(8);
+        riskMap.yScroller().enabled(true);
+        //riskMap.yZoom().setToPointsCount(10);
+
+        // Data
+        int [][] voltage_values = {{0, 0, 200, 300, 400, 450, 650, 800, 800, 800, 800},
+                                   {0, 100, 200, 300, 400, 500, 500, 700, 900, 900, 800},
+                                   {0, 100, 200, 300, 400, 550, 800, 1000, 1000, 900, 800},
+                                   {0, 100, 200, 300, 400, 500, 500, 500, 900, 900, 800},
+                                   {0, 100, 200, 350, 450, 700, 700, 500, 500, 500, 500},
+                                   {0, 50, 50, 100, 200, 300, 600, 600, 400, 400, 400},
+                                   {0, 0, 0, 0, 200, 300, 400, 400, 300, 200, 0},
+                                   {0, 0, 0, 0, 0, 0, 200, 200, 0, 0, 0},
+                                   {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                                   {0, 50, 100, 200, 600, 700, 600, 200, 100, 50, 0},
+                                   {0, 100, 200, 300, 700, 800, 700, 300, 200, 100, 0}};
+
+        int Max_pressure = 1000;
+        int Min_Pressure = 0;
         float max_pressure_colour = 0; //Red on the HUE Color Spectrum
         float min_pressure_colour = 240; //Blue on the HUE colour Spectrum
 
+
+       // Create data list
         List<DataEntry> data = new ArrayList<>();
         for (int row2 = 0; row2 <= voltage_values.length - 1; row2++) {
             for (int col2 = 0; col2 <= voltage_values[0].length - 1; col2++) {
-                double voltages = voltage_values[col2][row2] * 100;
-                int voltages_int = (int) voltages;
-                data.add(new CustomHeatDataEntry(row2 + 1 + "",col2 + 1 + "", voltages_int,IntegerToHslColour(voltages_int,Max_pressure, min_pressure_colour,max_pressure_colour )));
+                //double voltages = voltage_values[col2][row2] * 100;
+                //int voltages_int = (int) voltages;
+                data.add(new CustomHeatDataEntry(row2 + 1 + "",col2 + 1 + "", voltage_values[col2][row2],IntegerToHslColour(voltage_values[col2][row2],Max_pressure, min_pressure_colour,max_pressure_colour )));
             }
         }
 
-        riskMap.colorScale(ScaleTypes.LINEAR_COLOR);
-        riskMap.colorScale().colors(new String[]{"Blue", "green", "Yellow", "orange", "red"});
+        // Apply data to the chart
         riskMap.data(data);
+
+        // Render the chart
+        AnyChartView anyChartView = view.findViewById(R.id.any_chart_view);
         anyChartView.setChart(riskMap); //This loads the graph again
 
-        //Colours: Red = #d84315; Orange = #ef6c00; Yellow = #ffb74d; Blue = #90caf9"
 
+/*        // Simulate Real-time updates
+        final int delayMillis = 500;
+        final Handler handler = new Handler();
+        final Runnable runnable = new Runnable() {
+            public void run() {
+                // create new data List and populate it with values
+                List<DataEntry> data = new ArrayList<>();
+                for (int row3 = 0; row3 <= voltage_values.length - 1; row3++) {
+                    for (int col3 = 0; col3 <= voltage_values[0].length - 1; col3++) {
+                        //double voltages = voltage_values[col2][row2] * 100;
+                        //int voltages_int = (int) voltages;
+                        int randomNum = ThreadLocalRandom.current().nextInt(Min_Pressure, Max_pressure + 1);
+                        data.add(new CustomHeatDataEntry(row3 + 1 + "", col3 + 1 + "", randomNum, IntegerToHslColour(randomNum, Max_pressure, min_pressure_colour, max_pressure_colour)));
+                    }
+                }
+                // apply the new List to the existing chart
+                riskMap.data(data);
+
+                handler.postDelayed(this, delayMillis);
+            }
+        };
+
+        handler.postDelayed(runnable, delayMillis);*/
         return view;
     }
-
 
     private class CustomHeatDataEntry extends HeatDataEntry {
         CustomHeatDataEntry(String row, String col, int voltage, String fill) {
@@ -158,4 +234,5 @@ public class fragment_2dArrayGraph extends Fragment {
         return "hsl("+hue+", 100%, 50%)";
         // Output --> return = "hsl(120.768, 100%, 50%)" = GREEN on HUE colour wheel
     }
+
 }

@@ -41,7 +41,6 @@ public class SignupTabFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_signup_tab, container, false);
 
-
         Email = view.findViewById(R.id.signup_email);
         Sign_username = view.findViewById(R.id.signup_username);
         Phone = view.findViewById(R.id.signup_phone);
@@ -90,7 +89,6 @@ public class SignupTabFragment extends Fragment {
                         /* Store Credentials */
                         // Credentials are stored in location Device File Explorer >> data >> data >> com.example.smartsock >> shared_prefs >> CredentialsDB
                         sharedPreferencesEditor.putString(sign_username, sign_password);
-
                         sharedPreferencesEditor.putString("SavedUsername", sign_username);
                         sharedPreferencesEditor.putString("SavedPassword", sign_password);
                         sharedPreferencesEditor.putString("SavedEmail", email);
@@ -98,10 +96,8 @@ public class SignupTabFragment extends Fragment {
                         sharedPreferencesEditor.putString("SavedDOB", dob);
                         sharedPreferencesEditor.putString("SavedGender", gender);
 
-
                         /* Commits the changes and adds them to the file */
                         sharedPreferencesEditor.apply();
-
 
                         Intent intent = new Intent();
                         intent.setClass(getActivity(), LoginActivity.class);
@@ -114,13 +110,36 @@ public class SignupTabFragment extends Fragment {
             }
         });
 
-
         return view;
     }
 
+    /*
+     The validate function takes in parameters on the signup page of the app and decides whether
+     those inputs are suitable for a user to sign up with. For example, if a password doesn't
+     match the confirm password input then the user will be prompted with a message at the bottom
+     of the phone and doesn't let the user sign in (the function returns false. If all the
+     parameters ar met the function will return true and the users details will be stored and an
+     account will be made.
+    */
+
     private boolean validate(String username, String password, String confirm_password){
-        if(username.isEmpty() || password.length() < 8 && password != confirm_password) {
-            Toast.makeText(getContext(),"Enter all details, Password should be at least 8 characters, Ensure Confirm Passwords is correct", Toast.LENGTH_SHORT).show();
+        if(username.isEmpty() && password.isEmpty() && confirm_password.isEmpty()) {
+            Toast.makeText(getContext(), "Please fill in the username, password and confirm password fields at least", Toast.LENGTH_LONG).show();
+            return false;
+        }
+
+        if (password.length() < 8 && !password.equals("")) {
+            Toast.makeText(getContext(), "Password should be at least 8 characters", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!password.equals(confirm_password)){
+            Toast.makeText(getContext(), "Password and Confirm Password do not match", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (password.isEmpty() || confirm_password.isEmpty()){
+            Toast.makeText(getContext(), "Please enter a password and confirm the password", Toast.LENGTH_SHORT).show();
             return false;
         }
 

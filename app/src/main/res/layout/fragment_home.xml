@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,51 +8,101 @@
     android:background="@color/white"
     tools:context=".ui.home.HomeFragment">
 
-
-    <TextView
-        android:id="@+id/text_home"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:layout_marginBottom="32dp"
-        android:gravity="center"
-        android:text="@string/connect_bluetooth"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.815" />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="200dp"
-        android:layout_height="229dp"
-        android:layout_marginBottom="76dp"
-        app:layout_constraintBottom_toTopOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@drawable/circle"
-        app:srcCompat="@drawable/ic_baseline_bluetooth_24"
-        tools:ignore="VectorDrawableCompat" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="match_parent"
-        android:layout_height="82dp"
-        android:layout_marginBottom="144dp"
-        android:background="@color/md_blue_900"
-        android:fontFamily="sans-serif"
-        android:gravity="center"
-        android:text="THE SMART SOCK"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+    <Button
+        android:id="@+id/btnONOFF"
+        android:layout_width="187dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/btnDiscoverable"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="40dp"
+        android:text="ON/OFF"
         android:textColor="@color/white"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        app:backgroundTint="@color/md_blue_900" />
+
+    <Button
+        android:id="@+id/btnDiscoverable"
+        android:layout_width="187dp"
+        android:layout_height="40dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:onClick="btnEnableDisable_Discoverable"
+        android:text="Discoverable"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/md_blue_900" />
+
+    <Button
+        android:id="@+id/btnFindUnpairedDevices"
+        android:layout_width="187dp"
+        android:layout_height="40dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="17dp"
+        android:layout_toStartOf="@+id/btnDiscoverable"
+        android:onClick="btnDiscover"
+        android:text="Discover"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/md_blue_900" />
+
+    <ListView
+        android:id="@+id/lvNewDevices"
+        android:layout_width="wrap_content"
+        android:layout_height="518dp"
+        android:layout_above="@+id/editText"
+        android:layout_below="@+id/btnStartConnection"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="10dp" />
+
+    <Button
+        android:id="@+id/btnStartConnection"
+        android:layout_width="187dp"
+        android:layout_height="40dp"
+        android:layout_below="@+id/btnFindUnpairedDevices"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="17dp"
+        android:layout_toStartOf="@+id/btnONOFF"
+        android:text="Connect"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/md_blue_900" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <Button
+        android:id="@+id/btnSend"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="10dp"
+        android:text="SEND"
+        android:textColor="@color/white"
+        app:backgroundTint="@color/md_blue_900" />
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="46dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="10dp"
+        android:layout_toStartOf="@+id/btnSend"
+        android:hint="Enter Text Here"
+        android:textSize="20sp" />
+
+
+
+</RelativeLayout>

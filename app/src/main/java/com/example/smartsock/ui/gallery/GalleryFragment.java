@@ -30,6 +30,11 @@ public class GalleryFragment extends Fragment {
                 textView.setText(s);
             }
         });
+
+        TextView display_values = root.findViewById(R.id.data);
+        //TextView Pressure_values = root.findViewById(R.id.incomingMessage);
+        //display_values.setText((CharSequence) Pressure_values);
+
         return root;
     }
 }

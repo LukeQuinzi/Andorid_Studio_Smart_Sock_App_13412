@@ -20,7 +20,7 @@
     <string name="string_hi" />
     <string name="submit">Submit</string>
     <string name="hello">Hello</string>
-    <string name="connect_bluetooth">Tap Logo to Connect Bluetooth Device</string>
+    <string name="connect_bluetooth">Tap button to Connect Bluetooth Device</string>
     <string name="menu_graph" />
 
     <!-- Strings related to login -->

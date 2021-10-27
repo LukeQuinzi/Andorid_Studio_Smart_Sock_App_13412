@@ -3,13 +3,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 29
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.example.smartsock"
-        minSdkVersion 30
-        targetSdkVersion 30
+        minSdkVersion 29
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
@@ -22,10 +22,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url 'https://www.myget.org/F/abtsoftware/maven' }
 }
 
 dependencies {
@@ -74,4 +81,16 @@ dependencies {
     //Circular ImageView Library dependency
     implementation 'de.hdodenhof:circleimageview:3.0.1'
 
+
+    //Bluetooth Library
+    implementation 'com.akexorcist:bluetoothspp:1.0.0'
+
+    //Scichart
+    implementation (group: 'com.scichart.library', name: 'core', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'data', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'drawing', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'charting3d', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'charting', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'extensions', version: '3.0.0.4253', ext: 'aar')
+    implementation (group: 'com.scichart.library', name: 'extensions3d', version: '3.0.0.4253', ext: 'aar')
 }

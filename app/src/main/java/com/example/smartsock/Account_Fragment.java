@@ -9,12 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.smartsock.ui.login.LoginTabFragment;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link Account_Fragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Account_Fragment extends Fragment {
+public class Account_Fragment extends LoginTabFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
